@@ -1,0 +1,117 @@
+extends base.pug
+
+block title
+    if logged_in_public_user
+        title Home
+    else
+        title Welcome 
+block content
+    section#main
+    if logged_in_public_user
+        .container
+            h1.pt-4 Hi #{logged_in_public_user.google.name} &#128522;, thank you for Choosing Ufarm.
+            h5(style='color: #043927') Getting Started? Select a Category Below.
+    else 
+        .about.mt-5
+            h2.text-center About us
+            p.mb-5 ~ Bringing The Market To You ~
+            .container
+                .row
+                    .col-md-3.text-center
+                        img.img-fluid.rounded(src='/img/cabbage_jk.jpg' alt='...')
+                    .col-md-7.mt-md-0.mt-sm-5
+                        h5.text-start Description
+                        p.text-start
+                            | Ufarm is an online agricultural platform that sells poultry, horticulture and diary products. It was started in the year 2022 and it aims to
+                            | promote and support urban farmining practice while easing market access and improving on the family earnings and livelihoods of the farmers within
+                            | the City centers.
+                        h5.text-center Our Mission
+                        p.text-start
+                            i
+                                | To tirelessly bring the market closer to your vicinity henceforth reducing your time moving in crowded and unhygienical markets.
+                        h5.text-center Our Vision
+                        p.text-start
+                            i
+                                | To become the leading Online Market place for all farmers located within the urban centers.
+        #howTo
+            h2 How To Order
+            p ~ Creating an order subscription is easy ~
+            .instrtns
+                .row
+                    .mr-sm-1.ml-sm-1.col-sm-10.col-lg-3.inst
+                        .numbering
+                            span.num 1
+                        .instrtnsFollow
+                            h5 Shop Ufarm
+                            |               Visit our site and search for the product you want to buy - 
+                            |               You can search for a particular item upon logging in
+                    .mr-sm-1.ml-sm-1.col-sm-10.col-md-10.col-lg-3.inst
+                        .numbering
+                            span.num 2
+                        .instrtnsFollow
+                            h5 Delivery
+                            |              Book the product by entering the quantity you want to purchase plus your mobile number and 
+                            |              confirm the details.
+                    .mr-sm-1.ml-sm-1.col-sm-10.col-lg-3.inst
+                        .numbering
+                            span.num 3
+                        .instrtnsFollow
+                            h5 Happy Delivery
+                            |               Our sales individual will reach to you either buy phone or by email upon booking the product and 
+                            |               ask you for where you want your produce delivered or if you may want to pick from our stores.
+            a.viewShop(href='/categories_in_shop') View Our Shop
+        .viewShopSmall
+            h6
+                a(href='/categories_in_shop') View Our Shop
+    #exploreUfarm.container.mt-5
+        h2 Explore Ufarm
+        p ~ Discover the Different Categories To Shop ~
+        .row.row-cols-1.row-cols-md-3.g-4
+            .col.horticulture
+                .card.h-100
+                    img.card-img-top(src='/img/horticulture.jpg' alt='...')
+                    .card-body.mt-3.text-center
+                        a(href='/horticulture') Horticulture
+            .col.poultry
+                .card.h-100
+                    img.card-img-top(src='/img/poultry.jpg' alt='...')
+                    .card-body.mt-3.text-center
+                        a(href='/poultry') Poultry
+            .col.diary
+                .card.h-100
+                    img.card-img-top(src='/img/dairy.jpg' alt='...')
+                    .card-body.mt-3.text-center
+                        a(href='/dairy') Dairy
+    if !logged_in_public_user
+        .testimonials
+            .row
+                .col-md-5.our_features
+                    .row.mt-4.text-center
+                        .col-md-4.bx1
+                            img.us-img.organic(src='/img/organic.svg' alt='')
+                            h6.mt-2 100% Fresh &amp; Organic
+                            p Locally grown and sourced
+                        .col-md-4.bx1
+                            img.us-img.secure-ordering(src='/img/secured.svg' alt='')
+                            h6.mt-2 Secure Ordering
+                            p Encrypted transaction processing
+                        .col-md-3
+                        .col-md-4.bx1
+                            img.us-img.timeDelivery(src='/img/boxing_delivery.svg' alt='')
+                            h6.mt-2 Delivery
+                            p Timely delivery of produce
+                .col-md-5.user-testimonials
+                    p ~ Why Choose us ~
+                    h2 Testimonials
+                    .testi
+                        p
+                            | Brillian service, good quality local produce delivered direct to your home. I feel it is really important
+                            | to support urban producers but I also want value for money and Ufarm gives me both.
+                        h6
+                            i Micheal Kiyimba
+                    .testi.mt-4
+                        p
+                            | Brillian service, good quality local produce delivered direct to your home. I feel it is really important
+                            | to support urban producers but I also want value for money and Ufarm gives me both.
+                        h6
+                            i Micheal Kiyimba

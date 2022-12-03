@@ -1,0 +1,55 @@
+extends base.pug 
+block title 
+    title Search Produce
+block page-view
+    h3.text-center Search For a Produce
+block content
+    .veg-main
+        .market-search.container.my-5
+            form.mx-5(action='')
+                .row 
+                    .col-2 
+                    .col-8
+                        input.col-6.form-control(type='search' placeholder='produce category or name' name='search_produce' autocomplete='off')
+                        button.searchBtn(type='submit') Search
+        .container.mt-5
+            .row.row-cols-1.row-cols-md-3.row-cols-lg-4.g-4
+                if all_produces.length >= 1
+                    each produce in all_produces
+                        //- if produce.product_category == 'vegetable'
+                        if produce.product_status === 'approved'
+                            .col
+                                .card.h-100
+                                    img.card-img-top.card-img-top.px-2.py-2(src=`/${produce.produce_image}` alt='...')
+                                    .card-body.text-center.my-4
+                                        h4.card-title #{produce.pname}
+                                        h6.quantity.my-3(style='font-weight: lighter;') #{produce.sales_description}
+                                        h6.price.my-3(style='font-weight: lighter;') Ugx. #{produce.unit_price}
+                                        button.bk-btn.btn-primary.btn(type='button' data-bs-toggle='modal' data-bs-target=`#contact-sellerModal-${produce._id}`)
+                                            | Book Order
+                                        .modal.fade(tabindex='-1' id=`contact-sellerModal-${produce._id}` aria-labelledby=`contact-sellerModal-${produce._id}Label` aria-hidden='true')
+                                            .modal-dialog
+                                                .modal-content
+                                                    .modal-header
+                                                        h5#exampleModalLabel.modal-title #{produce.pname} / Specify your Quantity
+                                                        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                                                    .modal-body
+                                                        form(action="/create_booking" method='post')
+                                                            .container
+                                                                .row 
+                                                                    .col-2.mb-3
+                                                                        label.form-label(for='quantity') Quantity 
+                                                                    .col-7.mb-3
+                                                                        input.form-control(type='number' name='order_quantity' placeholder='Enter a number')
+                                                                    .col-3.mb-3
+                                                                    .col-2
+                                                                        label.form-label(for='public_user_contact') Contact
+                                                                    .col-7       
+                                                                        input.form-control(type='text' name='public_user_contact')
+                                                                    .col-3
+                                                            input(type='hidden' name='produce_id' value=`${produce._id}`)
+                                                            input(type='hidden' name='produce_owner_name' value=`${produce.fullname}`)
+                                                            input(type='hidden' name='produce_owner_contact' value=`${produce.contact}`)
+                                                            button.bk-btn.btn-primary.btn.mt-3(type='submit') Confirm
+                else 
+                    p No produces found                                    

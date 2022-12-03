@@ -1,0 +1,262 @@
+extends ../farmers_layout.pug 
+
+block main_content
+    .farmers-main
+        .container.mb-5 
+            .row 
+                .col-4 
+                    h4 Horticulture 
+                    if horticulture_totals.length >= 1
+                        each horticulture_total in horticulture_totals
+                            if horticulture_total._id.fullname === loggedInUrbanFarmer.fullname 
+                                h6.ps-3 Total Quantity: #{horticulture_total.totalQuantity}
+                                h6.ps-3 Total Income After Sell: #{horticulture_total.total_of_all_horticulture_products}
+                    else 
+                        h6.ps-3 Total Quantity: 0
+                        h6.ps-3 Total Income After Sell: 0
+                .col-4 
+                    h4 Poultry 
+                    if poultry_totals.length >= 1
+                        each poultry_total in poultry_totals
+                            if poultry_total._id.fullname === loggedInUrbanFarmer.fullname 
+                                h6.ps-3 Total Quantity: #{poultry_total.totalQuantity}
+                                h6.ps-3 Total Income After Sell: #{poultry_total.total_of_all_poultry_products}
+                    else 
+                        h6.ps-3 Total Quantity: 0
+                        h6.ps-3 Total Income After Sell: 0
+                .col-4 
+                    h4 Dairy 
+                    if diary_totals.length >= 1
+                        each diary_total in diary_totals
+                            if diary_total._id.fullname === loggedInUrbanFarmer.fullname 
+                                h6.ps-3 Total Quantity: #{diary_total.totalQuantity}
+                                h6.ps-3 Total Income After Sell: #{diary_total.total_of_all_diary_products}
+                    else 
+                        h6.ps-3 Total Quantity: 0
+                        h6.ps-3 Total Income After Sell: 0
+        .dashboard-tabs.urban-farmer-dashboard
+            ul#myTab.nav.nav-tabs(role='tablist')
+                li.nav-item(role='presentation')
+                    button#profile-tab.nav-link.active(data-bs-toggle='tab' data-bs-target='#profile' type='button' role='tab' aria-controls='profile' aria-selected='false') Pending Approval
+                li.nav-item(role='presentation')
+                    button#bookings-tab.nav-link(data-bs-toggle='tab' data-bs-target='#bookings' type='button' role='tab' aria-controls='bookings' aria-selected='false') Approved Produce
+                li.nav-item(role='presentation')
+                    button#bookings-tab.nav-link(data-bs-toggle='tab' data-bs-target='#publicUserBookings' type='button' role='tab' aria-controls='publicUserBookings' aria-selected='false') Public User Bookings
+                li.nav-item(role='presentation')
+                    button#home-tab.nav-link(data-bs-toggle='tab' data-bs-target='#home' type='button' role='tab' aria-controls='home' aria-selected='true') Declined Produce
+                li.nav-item(role='presentation')
+                    button#contact-tab.nav-link(data-bs-toggle='tab' data-bs-target='#contact' type='button' role='tab' aria-controls='contact' aria-selected='false') Registration
+            // Declined Produces - if declined provide an option of editing else have an option of deleting and uploading again
+            #myTabContent.tab-content
+                // Pending Approval
+                #profile.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='profile-tab')
+                    .container.mt-5
+                        h3.mb-3 Produces Pending Approval From Farmer One
+                        .row
+                            if userProduces.length >= 1
+                                each userProduce in userProduces
+                                    if userProduce.product_status === 'pending'
+                                        .col-md-5.mt-3
+                                            .row
+                                                .col-md-7
+                                                    p(style='text-align: left;')
+                                                        strong Name:
+                                                        i  #{userProduce.pname}
+                                                    p(style='text-align: left;')
+                                                        strong Category:
+                                                        i  #{userProduce.produce_type}
+                                                    //- p(style='text-align: left;')
+                                                    //-     strong Produce Subcategory:
+                                                    //-     i  Vegetables
+                                                    p(style='text-align: left;')
+                                                        strong Quantity:
+                                                        i  #{userProduce.quantity}
+                                                    p(style='text-align: left;')
+                                                        strong Price / Quantity:
+                                                        i  #{userProduce.unit_price}
+                                                    p(style='text-align: left;')
+                                                        strong Status:
+                                                        i  #{userProduce.product_status}
+                                                    p(style='text-align: left;')
+                                                        strong Urban Farmer ward:
+                                                        i  #{userProduce.pward}
+                                                    //- p(style='text-align: left;')
+                                                    //-     strong Contact:
+                                                    //-     i  0700000001
+                                                .col-md-5
+                                                    h3 #{userProduce.pname}
+                                                    .text-center
+                                                        img.img-thumbnail(src='/'+userProduce.produce_image alt='...')
+                                                hr.mt-5
+                            else 
+                                p No pending produces
+                // Approved Produce
+                #bookings.tab-pane.fade(role='tabpanel' aria-labelledby='bookings-tab')
+                    .container.mt-5
+                        h3 Approved Products
+                        .row
+                            if userProduces.length >= 1
+                                each userProduce in userProduces 
+                                    if userProduce.product_status == 'approved'
+                                        .col-md-4.mt-3
+                                            //- p(style='text-align: left;')
+                                            //-     strong Produce ID:
+                                            //-     i  #{userProduce._id}
+                                            p(style='text-align: left;')
+                                                strong Category:
+                                                i  #{userProduce.produce_type}
+                                            p(style='text-align: left;')
+                                                strong Produce:
+                                                i  #{userProduce.pname}
+                                            p(style='text-align: left;')
+                                                strong Quantity:
+                                                i  #{userProduce.quantity}
+                                            p(style='text-align: left;')
+                                                strong Price Per Quantity:
+                                                i  #{userProduce.unit_price}
+                                            p(style='text-align: left;')
+                                                strong Upload Date:
+                                                i  #{userProduce.upload_date}
+                                            //- p(style='text-align: left;')
+                                            //-     strong Uward:
+                                            //-     i  #{userProduce.pward}
+                                            p(style='text-align: left;')
+                                                strong Availability:
+                                                i  #{userProduce.produce_availability}
+                                            button.add2cart-btn.btn(type='button' data-bs-toggle='modal' data-bs-target=`#exampleModal-${userProduce._id}`)
+                                                | Update Product Availability
+                                            .modal.fade(tabindex='-1' id=`exampleModal-${userProduce._id}` aria-labelledby=`exampleModal-${userProduce._id}Label` aria-hidden='true')
+                                                .modal-dialog.modal-dialog-centered
+                                                    .modal-content
+                                                        .modal-header
+                                                            h5(id=`exampleModalLabel-${userProduce._id}`).modal-title Product: #{userProduce.pname}
+                                                            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                                                        .modal-body
+                                                            .container
+                                                                form.mt-3(action=`/urban_farmer_dashboard/update_product_availability/${userProduce._id}` method='post')
+                                                                    select.form-select(aria-label='Product-availability' name='product_availability')
+                                                                        option(selected) Choose Product Availabilty
+                                                                        option(value='available') Available
+                                                                        option(value='not-available') Not Available
+                                                                    button.add2cart-btn.btn.d-block.mt-4(type='submit' style="width: 150px; padding: 1%;") Submit  
+                                            hr
+                            else 
+                                p None of the products are approved
+                #publicUserBookings.tab-pane.fade(role='tabpanel' aria-labelledby='publicUserBookings-tab')
+                    .container.mt-5 
+                        .row
+                            if urban_farmer_Orders.length >= 1
+                                each urban_farmer_Order in urban_farmer_Orders 
+                                    if urban_farmer_Order._id.produce_owner_name === loggedInUrbanFarmer.fullname && urban_farmer_Order._id.order_status === 'booked & pending'
+                                        .col-md-4.mb-4
+                                            p(style='text-align: left')
+                                                strong Order Status 
+                                                i(style='color: #4CBB17; font-weight: bolder') #{urban_farmer_Order._id.order_status}
+                                            p(style='text-align: left')
+                                                strong Ordered By: 
+                                                i #{urban_farmer_Order._id.public_user_name} : Email: #{urban_farmer_Order._id.public_user_email} : Contact: #{urban_farmer_Order._id.public_user_contact}
+                                            p(style='text-align: left')
+                                                strong Date of Order: 
+                                                i #{urban_farmer_Order._id.ordered_date}
+                                            p(style='text-align: left')
+                                                strong Produce Ordered 
+                                                i #{urban_farmer_Order._id.produce_ordered}
+                                            p(style='text-align: left')
+                                                strong Produce Quantity  
+                                                i #{urban_farmer_Order._id.order_quantity}
+                                            p(style='text-align: left')
+                                                strong Price Per Quantity 
+                                                i #{urban_farmer_Order._id.unit_price}
+                                            p(style='text-align: left')
+                                                // To be got after aggregations
+                                                strong Produce Total 
+                                                i #{urban_farmer_Order.productTotal}
+                                            // Button trigger modal
+                                            button.add2cart-btn.btn(type='button' data-bs-toggle='modal' data-bs-target=`#exampleModal-${urban_farmer_Order._id._id}`)
+                                                | Approve Order
+                                        // modal - approve orders
+                                        .modal.fade(tabindex='-1' id=`exampleModal-${urban_farmer_Order._id._id}` aria-labelledby=`exampleModal-${urban_farmer_Order._id._id}Label` aria-hidden='true')
+                                            .modal-dialog.modal-lg
+                                                .modal-content
+                                                    .modal-header
+                                                        h5#exampleModalLabel.modal-title Product: #{urban_farmer_Order._id.produce_ordered} Ordered By: #{urban_farmer_Order._id.public_user_name}
+                                                        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                                                    .modal-body
+                                                        .container
+                                                            form.mt-3(action=`/urban_farmer_dashboard/approve_user_order/${urban_farmer_Order._id._id}` method='post')
+                                                                .form-check.d-inline-block.me-5.my-4
+                                                                    input#approve.form-check-input(type='radio' name='approve_decline_order' value="Approved for Delivery")
+                                                                    label.form-check-label(for='approve') Approve Order
+                                                                .form-check.d-inline-block.ms-5.my-4
+                                                                    input#decline.form-check-input(type='radio' name='approve_decline_order' value="Order Declined" checked)
+                                                                    label.form-check-label(for='decline') Decline Order
+                                                                button.add2cart-btn.btn.d-block(type='submit' style="width: 150px; padding: 1%;") Submit
+                            else 
+                                p No public bookings were made
+                // Declined Produce
+                #home.tab-pane.fade(role='tabpanel' aria-labelledby='home-tab')
+                    .container.mt-5
+                        .row
+                            if userProduces.length >= 1 && userProduces[0].product_status == 'declined'
+                                each userProduce in userProduces
+                                    if userProduce.product_status == 'declined'
+                                        p(style='text-align: left;')
+                                            strong Category:
+                                            i  #{userProduce.produce_type}
+                                        p(style='text-align: left;')
+                                            strong Produce:
+                                            i  #{userProduce.pname}
+                                        p(style='text-align: left;')
+                                            strong Quantity:
+                                            i  #{userProduce.quantity}
+                                        p(style='text-align: left;')
+                                            strong Price Per Quantity:
+                                            i  #{userProduce.unit_price}
+                                        p(style='text-align: left;')
+                                            strong Upload Date:
+                                            i  #{userProduce.upload_date}
+                                    else 
+                                        p No declined produces
+                            else 
+                                p No Declined Produces                  
+                // Registration
+                #contact.tab-pane.fade(role='tabpanel' aria-labelledby='contact-tab')
+                    .container.mt-5
+                        form(action='/urban_farmer_dashboard' method='post' enctype="multipart/form-data")
+                            .row
+                                .col-md-4.mb-5
+                                    label.form-label(for='fo_name') Produce Name:
+                                    input#fo_name.form-control(type='text' name='pname' required)
+                                .col-md-2.mb-5
+                                    label.form-label(for='fo_ward') Produce Ward:
+                                    input#fo_ward.form-control(type='text' name='pward' value=`${loggedInUrbanFarmer.ward}` readonly)
+                                .col-md-4.mb-5
+                                    label.form-label(for='unit_price') Unit Price:
+                                    input#unit_price.form-control(type='number' name='unit_price' required)
+                                .col-md-2.mb-5
+                                    label.form-label(for='quantity') Quantity
+                                    input#quantity.form-control(type='number' name='quantity' required)
+                                .col-md-3.mb-5
+                                    label.form-label(for='produce_type') Produce Type:
+                                    select#produce_type.form-select(name="produce_type")
+                                        option(selected='') Select a produce type
+                                        option(value='horticulture') Horticulture
+                                        option(value='poultry') Poultry
+                                        option(value='dairy') Diary
+                                .col-md-4.mb-5
+                                    label.form-label(for='produce_image') Produce Image:
+                                    input#produce_image.form-control(type='file' name='produce_image')
+                                .col-md-2.mb-5
+                                    label.form-label(for='produce_availability') Sales Description:
+                                    input#produce_availability.form-control(type='text' name='sales_description' placeholder='per kg/per carton' required)
+                                .col-md-3.mb-5
+                                    label.form-label.d-block.mb-3 Mode of Payment:
+                                    .form-check.d-inline-block
+                                        input#mode_of_payment.form-check-input(type='radio' name='mode_of_payment' value='mobile money')
+                                        label.form-check-label(for='mode_of_payment')
+                                            | Mobile Money
+                                    .form-check.d-inline-block.ms-4
+                                        input#mode_of_payment.form-check-input(type='radio' name='mode_of_payment' value='cash on delivery')
+                                        label.form-check-label(for='mode_of_payment')
+                                            | Cash On Delivery
+                            button.form_btn.mt-5(type='submit') Upload

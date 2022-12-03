@@ -1,0 +1,110 @@
+extends base.pug
+
+block title 
+    title Our Farmers
+block page-view
+    if logged_in_public_user
+        p Hello #{logged_in_public_user.google.name}
+        h3.text-center Check our Amazing Farmers and their biography
+    else 
+        h3.text-center Check our Amazing Farmers and their biography
+block content
+    .farmers-main
+        if !logged_in_public_user
+            .container.mb-5
+                .about-farmer-registration.mb-5
+                    h6.text-center Farmer Registration
+                p
+                    | Our urban farmers are registered by the Farmer One Officer at the respective wards for easy monitoring
+                    | and regular check on.
+                    | To be registered as one of our farmers, visit any of our wards near your location or check our 
+                    a(href='#') About page
+                    |                 for more information about wards in your vicinity.
+                .registered-farmers.mt-5
+                    p
+                        | Are you a registered farmer? Click 
+                        a(href='/login') Farmer Login
+                hr
+            .container-fluid.mt-5
+                .registered-farmers-info.container
+                    .meet-the-farmers.mb-5
+                        h6.mb-5.text-center Meet Our farmers
+                    .row
+                        .col-md-6.my-4
+                            .row
+                                .col-md-4
+                                    .farmImg
+                                        img.round-img(src='/img/farmer-img.jpg' alt='')
+                                .col-md-8.mt-2
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam dolore reiciendis dicta sint
+                                    | perferendis ad recusandae quisquam dolorum officiis nobis porro in incidunt, fugiat voluptas
+                                    | perspiciatis! Nisi, natus nesciunt.
+                        .col-md-6.my-4
+                            .row
+                                .col-md-4
+                                    .farmImg
+                                        img.round-img(src='/img/farmer-img2.jpg' alt='')
+                                .col-md-8.mt-2
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam dolore reiciendis dicta sint
+                                    | perferendis ad recusandae quisquam dolorum officiis nobis porro in incidunt, fugiat voluptas
+                                    | perspiciatis! Nisi, natus nesciunt.
+                        .col-md-6.my-4
+                            .row
+                                .col-md-4
+                                    .farmImg
+                                        img.round-img(src='/img/farmer-img3.jpg' alt='')
+                                .col-md-8.mt-2
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam dolore reiciendis dicta sint
+                                    | perferendis ad recusandae quisquam dolorum officiis nobis porro in incidunt, fugiat voluptas
+                                    | perspiciatis! Nisi, natus nesciunt.
+                        .col-md-6.my-4
+                            .row
+                                .col-md-4
+                                    .farmImg
+                                        img.round-img(src='/img/farmer-img4.jpg' alt='')
+                                .col-md-8.mt-2
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam dolore reiciendis dicta sint
+                                    | perferendis ad recusandae quisquam dolorum officiis nobis porro in incidunt, fugiat voluptas
+                                    | perspiciatis! Nisi, natus nesciunt.
+        else 
+            .container-fluid.mt-5
+                .registered-farmers-info.container
+                    .meet-the-farmers.mb-5
+                        h6.mb-5.text-center Meet Our farmers
+                    .row
+                        .col-md-6.my-4
+                            .row
+                                .col-md-4
+                                    .farmImg
+                                        img.round-img(src='/img/farmer-img.jpg' alt='')
+                                .col-md-8.mt-2
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam dolore reiciendis dicta sint
+                                    | perferendis ad recusandae quisquam dolorum officiis nobis porro in incidunt, fugiat voluptas
+                                    | perspiciatis! Nisi, natus nesciunt.
+                        .col-md-6.my-4
+                            .row
+                                .col-md-4
+                                    .farmImg
+                                        img.round-img(src='/img/farmer-img2.jpg' alt='')
+                                .col-md-8.mt-2
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam dolore reiciendis dicta sint
+                                    | perferendis ad recusandae quisquam dolorum officiis nobis porro in incidunt, fugiat voluptas
+                                    | perspiciatis! Nisi, natus nesciunt.
+                        .col-md-6.my-4
+                            .row
+                                .col-md-4
+                                    .farmImg
+                                        img.round-img(src='/img/farmer-img3.jpg' alt='')
+                                .col-md-8.mt-2
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam dolore reiciendis dicta sint
+                                    | perferendis ad recusandae quisquam dolorum officiis nobis porro in incidunt, fugiat voluptas
+                                    | perspiciatis! Nisi, natus nesciunt.
+                        .col-md-6.my-4
+                            .row
+                                .col-md-4
+                                    .farmImg
+                                        img.round-img(src='/img/farmer-img4.jpg' alt='')
+                                .col-md-8.mt-2
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea ipsam dolore reiciendis dicta sint
+                                    | perferendis ad recusandae quisquam dolorum officiis nobis porro in incidunt, fugiat voluptas
+                                    | perspiciatis! Nisi, natus nesciunt.

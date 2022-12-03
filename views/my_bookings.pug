@@ -1,0 +1,121 @@
+extends base.pug
+
+block title 
+    title Orders
+block page-view
+    p Hello #{logged_in_public_user.google.name}
+    h3.text-center Contact Seller For Order Information
+block content
+    .orders-main.my-5
+        .dashboard-tabs.urban-farmer-dashboard
+            ul#myTab.nav.nav-tabs(role='tablist')
+                li.nav-item(role='presentation')
+                    button#home-tab.nav-link.active(data-bs-toggle='tab' data-bs-target='#home' type='button' role='tab' aria-controls='home' aria-selected='true') Pending Orders
+                li.nav-item(role='presentation')
+                    button#profile-tab.nav-link(data-bs-toggle='tab' data-bs-target='#profile' type='button' role='tab' aria-controls='profile' aria-selected='false') Approved Orders
+                //- li.nav-item(role='presentation')
+                //-     button#contact-tab.nav-link(data-bs-toggle='tab' data-bs-target='#contact' type='button' role='tab' aria-controls='contact' aria-selected='false') Declined
+            #myTabContent.tab-content
+                //- Orders Pending Approval
+                #home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='home-tab')
+                    .container.mt-5
+                        .row
+                            if myOrders.length 
+                                each myOrder in myOrders
+                                    //- this should only be for the user that has logged in
+                                    if myOrder._id.order_status === 'booked & pending' && logged_in_public_user.google.name === myOrder._id.public_user_name
+                                        .col-md-4.mb-4
+                                            p(style='text-align: left')
+                                                strong Order Status 
+                                                i(style='color: #4CBB17; font-weight: bolder') #{myOrder._id.order_status} 
+                                            p(style='text-align: left')
+                                                strong Produce Ordered 
+                                                i #{myOrder._id.produce_ordered}
+                                            p(style='text-align: left')
+                                                strong Produce Quantity 
+                                                i #{myOrder._id.order_quantity}
+                                            p(style='text-align: left')
+                                                strong Price: 
+                                                i #{myOrder._id.unit_price} #{myOrder._id.sales_description}
+                                            p(style='text-align: left')
+                                                strong Produce Total 
+                                                i #{myOrder.productTotal}
+                                            // Button trigger modal
+                                            button.add2cart-btn.btn(type='button' data-bs-toggle='modal' data-bs-target=`#exampleModal-${myOrder._id._id}`)
+                                                | Contact Seller
+                                        // Modal
+                                        .modal.fade(tabindex='-1' id=`exampleModal-${myOrder._id._id}` aria-labelledby=`exampleModal-${myOrder._id._id}Label` aria-hidden='true')
+                                            .modal-dialog.modal-dialog-centered
+                                                .modal-content
+                                                    .modal-header
+                                                        h5#exampleModalLabel.modal-title Product: #{myOrder._id.produce_ordered}
+                                                        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                                                    .modal-body
+                                                        .row.mt-2.mb-2 
+                                                            .col-12 
+                                                                h4 Seller Name: #{myOrder._id.produce_owner_name}
+                                                                .row 
+                                                                    .col-4 
+                                                                    .col-4 
+                                                                        hr
+                                                                    .col-4
+                                                        .row 
+                                                            .col-12 
+                                                                h5 Dail Contact: #{myOrder._id.produce_owner_contact}
+                                                            .col-12.mt-3 
+                                                                h6.text-center 
+                                                                    a(href=`mailto:${myOrder._id.produce_owner_email}` style='text-decoration: none') Email #{myOrder._id.produce_owner_name}
+                            else 
+                                p No Orders were made
+                // Delivered
+                #profile.tab-pane.fade(role='tabpanel' aria-labelledby='profile-tab')
+                    .container.mt-5
+                        .row
+                            if myOrders.length 
+                                each myOrder in myOrders
+                                    //- Get the logged in user so that we only see delivered produce for him only
+                                    if myOrder._id.order_status === 'Approved for Delivery' && logged_in_public_user.google.name === myOrder._id.public_user_name
+                                        .col-md-4.mb-4
+                                            p(style='text-align: left')
+                                                strong Order Status 
+                                                i(style='color: #4CBB17; font-weight: bolder') #{myOrder._id.order_status} 
+                                            p(style='text-align: left')
+                                                strong Produce Ordered 
+                                                i #{myOrder._id.produce_ordered}
+                                            p(style='text-align: left')
+                                                strong Produce Quantity 
+                                                i #{myOrder._id.order_quantity}
+                                            p(style='text-align: left')
+                                                strong Price Per Quantity 
+                                                i #{myOrder._id.unit_price}
+                                            p(style='text-align: left')
+                                                // To be got after aggregations
+                                                strong Produce Total 
+                                                i #{myOrder.productTotal}
+                                            // Button trigger modal
+                                            button.add2cart-btn.btn(type='button' data-bs-toggle='modal' data-bs-target=`#exampleModal-${myOrder._id._id}`)
+                                                | Contact Seller
+                                        // Modal
+                                        .modal.fade(tabindex='-1' id=`exampleModal-${myOrder._id._id}` aria-labelledby=`exampleModal-${myOrder._id._id}Label` aria-hidden='true')
+                                            .modal-dialog.modal-dialog-centered
+                                                .modal-content
+                                                    .modal-header
+                                                        h5#exampleModalLabel.modal-title Product: #{myOrder._id.produce_ordered}
+                                                        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                                                    .modal-body
+                                                        .row.mt-2.mb-2 
+                                                            .col-12 
+                                                                h4 Seller Name: #{myOrder._id.produce_owner_name}
+                                                                .row 
+                                                                    .col-4 
+                                                                    .col-4 
+                                                                        hr
+                                                                    .col-4
+                                                        .row 
+                                                            .col-12 
+                                                                h5 Dail Contact: #{myOrder._id.produce_owner_contact}
+                                                            .col-12.mt-3 
+                                                                h6.text-center 
+                                                                    a(href=`mailto:${myOrder._id.produce_owner_email}` style='text-decoration: none') Email #{myOrder._id.produce_owner_name}
+                            else 
+                                p No Orders were made

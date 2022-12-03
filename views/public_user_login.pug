@@ -1,0 +1,19 @@
+head
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css')
+section.vh-100(style='background-color: #9A616D;')
+    .container.py-5.h-100
+        .row.d-flex.justify-content-center.align-items-center.h-100
+            .col.col-xl-10
+                .card(style='border-radius: 1rem;')
+                    .row.g-0
+                        .col-md-6.col-lg-5.d-none.d-md-block
+                            img.img-fluid(src='/img/public_user_login_img.jpg' alt='login form' style='border-radius: 1rem 0 0 1rem;')
+                        .col-md-6.col-lg-7.d-flex.align-items-center
+                            .card-body.p-4.p-lg-5.text-black
+                                form(action='/auth/google' method='GET')
+                                    h4.text-center.my-5 Log in with your google account
+                                    button.btn.btn-lg.btn-block.mb-5.justify-content-center(type='submit')
+                                        img(src="https://www.freepnglogos.com/uploads/google-logo-png/file-google-logo-svg-wikimedia-commons-23.png", style='width: 200px' alt="google-logo")
+                                    .mt-5.text-center
+                                        a.small.text-muted(href='#!') Terms of use.
+                                        a.small.text-muted(href='#!') Privacy policy
